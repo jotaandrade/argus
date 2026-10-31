@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Argus · Todos os seus agentes do Claude Code num canvas só</title>
+  <meta name="description" content="Argus é um canvas infinito para acompanhar todos os seus projetos e as conversas do Claude Code ao mesmo tempo. Grátis, roda na sua máquina, com a sua assinatura.">
+  <link rel="icon" href="assets/icon.png">
+  <meta property="og:title" content="Argus">
+  <meta property="og:description" content="Cem olhos sobre todos os seus agentes do Claude Code.">
+  <meta property="og:image" content="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav" id="topo">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#topo"><img src="assets/icon.png" alt="" width="28" height="28"> Argus</a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#design">Modo design</a>
+      <a href="#download">Download</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/ffernandomoraes/argus" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn--accent btn--sm" href="#download">Baixar</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span> O canvas para quem trabalha com agentes</p>
+      <h1>Cem olhos sobre todos os seus agentes.</h1>
+      <p class="lead">Cada pasta vira um bloco num canvas infinito. Você vê na hora o que cada conversa do Claude Code está fazendo, o que terminou e o que parou esperando por você.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--accent" href="#download">Baixar grátis</a>
+        <a class="btn btn--ghost" href="https://github.com/ffernandomoraes/argus" target="_blank" rel="noopener">Ver no GitHub</a>
+      </div>
+
+      <div class="ticker" aria-label="Exemplos de uso">
+        <span class="ticker__label mono">Com o Argus você</span>
+        <ul class="ticker__list" id="ticker">
+          <li>acompanha dez conversas sem dez abas de terminal</li>
+          <li>aprova comandos sem sair do canvas</li>
+          <li>lê o diff de cada edição no próprio chat</li>
+          <li>comenta em cima da página e o Claude ajusta o código</li>
+          <li>separa trabalho e pessoal, cada um com a sua conta</li>
+          <li>sabe na hora qual agente precisa de você</li>
+        </ul>
+      </div>
+
+      <figure class="window hero__shot">
+        <div class="window__bar"><i></i><i></i><i></i><span class="mono">Argus</span></div>
+        <img src="assets/canvas.svg" alt="Canvas do Argus com projetos agrupados em Trabalho e Pessoal, conversas rodando com subagentes, uma nota, um terminal e o painel da conversa pedindo permissão" width="1200" height="690">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Faixa de compatibilidade -->
+  <section class="strip">
+    <div class="wrap strip__inner">
+      <span class="mono strip__label">Funciona com</span>
+      <ul>
+        <li>Claude Code</li><li>Codex</li><li>Gemini CLI</li><li>Cursor CLI</li><li>macOS</li><li>Windows</li><li>Linux</li><li>WSL</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Funcionalidades -->
+  <section class="section" id="funcionalidades">
+    <div class="wrap">
+      <p class="kicker mono">01 · Do pedido à mudança pronta</p>
+      <h2>Tudo o que os seus agentes fazem, à vista.</h2>
+      <p class="sub">Menos troca de janela, nada parado sem você saber.</p>
+
+      <div class="grid grid--3">
+        <article class="card">
+          <span class="card__num mono">/01</span>
+          <h3>Organize tudo num canvas</h3>
+          <p>Cada projeto é um bloco com a branch do git, os arquivos não comitados e as conversas mais recentes. Agrupe por Trabalho, Freela e Pessoal.</p>
+        </article>
+        <article class="card">
+          <span class="card__num mono">/02</span>
+          <h3>Converse onde preferir</h3>
+          <p>O chat completo abre no painel lateral, numa janela própria ou como um bloco no canvas. Cole prints, anexe arquivos e dite.</p>
+        </article>
+        <article class="card">
+          <span class="card__num mono">/03</span>
+          <h3>Veja os subagentes trabalhando</h3>
+          <p>Cada subagente aparece embaixo da conversa que o lançou, com o que está fazendo agora e o que entregou no fim.</p>
+        </article>
+        <article class="card">
+          <span class="card__num mono">/04</span>
+          <h3>Responda sem trocar de contexto</h3>
+          <p>Aprove permissões, responda perguntas e leia o diff de cada arquivo editado, direto no chat.</p>
+        </article>
+        <article class="card">
+          <span class="card__num mono">/05</span>
+          <h3>Terminais e código por perto</h3>
+          <p>Terminais embutidos no canvas, explorador de arquivos com as cores do git e editor com o tema do VS Code.</p>
+        </article>
+        <article class="card">
+          <span class="card__num mono">/06</span>
+          <h3>Organize o canvas por voz</h3>
+          <p>"Cria um grupo Freela com essas duas pastas." A barra de comando entende texto e voz e arruma tudo para você.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modo design -->
+  <section class="section section--alt" id="design">
+    <div class="wrap split">
+      <div class="split__text">
+        <p class="kicker mono">02 · Modo design</p>
+        <h2>Prototipe no código de verdade.</h2>
+        <p class="sub">Abra a página do projeto dentro do Argus, clique em qualquer ponto e deixe um comentário. O Claude ajusta o código real, não um mockup à parte.</p>
+        <ul class="checks">
+          <li>Comentários presos aos elementos da página</li>
+          <li>Visão desktop e celular, com recarregar só da página</li>
+          <li>Um retrato em texto do que está na tela, sem gastar tokens com imagem</li>
+          <li>Projetos com vários apps: escolha qual abrir</li>
+        </ul>
+      </div>
+      <figure class="window">
+        <div class="window__bar"><i></i><i></i><i></i><span class="mono">Novo design</span></div>
+        <img src="assets/modo-design.svg" alt="Modo design: página de checkout aberta no Argus com dois comentários presos aos elementos e o chat ao lado" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Sua máquina -->
+  <section class="section">
+    <div class="wrap">
+      <p class="kicker mono">03 · Do seu jeito</p>
+      <h2>Sua assinatura. Sua máquina. Seus agentes.</h2>
+      <p class="sub">O Argus roda o <code>claude</code> que você já tem instalado. Sem chave de API e sem servidor no meio.</p>
+
+      <div class="grid grid--3">
+        <article class="card card--feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+          </div>
+          <h3>Na sua assinatura</h3>
+          <p>Usa o login do Claude Code que já existe na máquina, com o mesmo <code>CLAUDE.md</code>, as mesmas configurações e os mesmos MCPs.</p>
+        </article>
+        <article class="card card--feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 19c1-3 3-4 5-4s4 1 5 4M11 19c1-3 3-4 5-4s4 1 5 4"/></svg>
+          </div>
+          <h3>Uma conta por grupo</h3>
+          <p>A pessoal num grupo, a da empresa em outro. O limite de uso de cada uma fica à vista na barra de título.</p>
+        </article>
+        <article class="card card--feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg>
+          </div>
+          <h3>Vários agentes conversando</h3>
+          <p>Claude Code, Codex, Gemini e Cursor. Uma conversa pode delegar etapas para outro agente e você acompanha cada uma.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Acompanhamento -->
+  <section class="section section--alt">
+    <div class="wrap split split--reverse">
+      <div class="split__text">
+        <p class="kicker mono">04 · Acompanhamento</p>
+        <h2>Nada fica parado sem você saber.</h2>
+        <p class="sub">Notificação do sistema, ícone na barra de menus e a cor de cada conversa avisam quando o Claude termina ou precisa de uma resposta.</p>
+        <ul class="checks">
+          <li>Status de cada conversa: rodando, esperando você, concluída</li>
+          <li>Limite de uso por conta, sempre à vista</li>
+          <li>Servidores locais que os agentes deixaram rodando, com atalho para encerrar</li>
+          <li>Confirmação antes de fechar o app com algo em andamento</li>
+        </ul>
+      </div>
+      <figure class="window">
+        <div class="window__bar"><i></i><i></i><i></i><span class="mono">Barra de menus</span></div>
+        <img src="assets/acompanhamento.svg" alt="Menu da barra de menus com as conversas rodando, esperando e concluídas, notificações e limite de uso por conta" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="section" id="download">
+    <div class="wrap">
+      <p class="kicker mono">05 · Comece agora</p>
+      <h2>Comece no seu computador.</h2>
+      <p class="sub">Grátis. Precisa do Claude Code instalado e logado na sua máquina.</p>
+
+      <div class="grid grid--3">
+        <a class="card card--download" href="https://github.com/ffernandomoraes/argus/releases/latest" target="_blank" rel="noopener">
+          <span class="mono card__num">macOS</span>
+          <h3>Apple Silicon</h3>
+          <p>.dmg e .zip, com atualização dentro do app.</p>
+          <span class="arrow">Baixar →</span>
+        </a>
+        <a class="card card--download" href="https://github.com/ffernandomoraes/argus/releases/latest" target="_blank" rel="noopener">
+          <span class="mono card__num">Windows</span>
+          <h3>Windows 10 e 11</h3>
+          <p>Instalador de um clique, sem pedir administrador.</p>
+          <span class="arrow">Baixar →</span>
+        </a>
+        <a class="card card--download" href="https://github.com/ffernandomoraes/argus/releases/latest" target="_blank" rel="noopener">
+          <span class="mono card__num">Linux</span>
+          <h3>AppImage</h3>
+          <p>Um arquivo só, roda na maioria das distros.</p>
+          <span class="arrow">Baixar →</span>
+        </a>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal__bar"><i></i><i></i><i></i><span class="mono">Terminal</span></div>
+        <pre class="mono"><span class="muted"># abra a pasta atual no canvas, como o code . do VS Code</span>
+<span class="accent">$</span> cd ~/projetos/meu-app
+<span class="accent">$</span> argus .</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--alt" id="faq">
+    <div class="wrap faq">
+      <div>
+        <p class="kicker mono">06 · Perguntas</p>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <div class="faq__list">
+        <details>
+          <summary>O Argus é pago?</summary>
+          <p>Não. O app é gratuito. Ele usa a sua assinatura do Claude, a mesma que você já usa no terminal.</p>
+        </details>
+        <details>
+          <summary>Preciso de uma chave de API?</summary>
+          <p>Não. O Argus roda o <code>claude</code> instalado na sua máquina, com o login que já existe nele.</p>
+        </details>
+        <details>
+          <summary>Meus projetos saem do meu computador?</summary>
+          <p>Não. O app roda local, sem servidor no meio. As conversas vão para o Claude do mesmo jeito que iriam pelo terminal.</p>
+        </details>
+        <details>
+          <summary>Ele substitui o VS Code?</summary>
+          <p>Não é a ideia. Dá para ver, navegar e fazer edições simples no código, mas o foco é acompanhar e conversar com os agentes.</p>
+        </details>
+        <details>
+          <summary>Vejo as conversas que abri no terminal?</summary>
+          <p>Sim. O Argus enxerga as sessões abertas fora do app (terminal, VS Code) e mostra o status delas na pasta.</p>
+        </details>
+        <details>
+          <summary>Como atualizo?</summary>
+          <p>Pelo botão "Atualizar para" na barra de título. O app procura versões novas sozinho.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="final">
+    <div class="wrap">
+      <h2>Pare de caçar abas de terminal.</h2>
+      <p class="sub">Veja todos os seus agentes de uma vez.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--accent" href="#download">Baixar grátis</a>
+        <a class="btn btn--ghost" href="https://github.com/ffernandomoraes/argus" target="_blank" rel="noopener">Ver no GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div>
+      <a class="brand" href="#topo"><img src="assets/icon.png" alt="" width="24" height="24"> Argus</a>
+      <p class="muted">Na mitologia grega, Argus era o gigante de cem olhos que via tudo ao mesmo tempo.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h4 class="mono">Produto</h4>
+        <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#design">Modo design</a>
+        <a href="#download">Download</a>
+      </div>
+      <div>
+        <h4 class="mono">Projeto</h4>
+        <a href="https://github.com/ffernandomoraes/argus" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/ffernandomoraes/argus/releases" target="_blank" rel="noopener">Versões</a>
+        <a href="https://github.com/ffernandomoraes/argus/issues" target="_blank" rel="noopener">Reportar um problema</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer__legal muted mono">© 2026 Argus. Não é afiliado à Anthropic.</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

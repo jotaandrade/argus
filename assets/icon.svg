@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A2A30"/>
+      <stop offset="1" stop-color="#121214"/>
+    </linearGradient>
+    <linearGradient id="parent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A3A41"/>
+      <stop offset="1" stop-color="#2C2C32"/>
+    </linearGradient>
+    <pattern id="dots" width="44" height="44" patternUnits="userSpaceOnUse" x="490" y="490">
+      <circle cx="22" cy="22" r="3.2" fill="#FFFFFF" fill-opacity="0.09"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <clipPath id="tile"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect x="100" y="100" width="824" height="824" fill="url(#bg)"/>
+    <rect x="100" y="100" width="824" height="824" fill="url(#dots)"/>
+
+    <!-- ligação em árvore, igual à do canvas -->
+    <path d="M296 420 L 296 724 Q 296 754, 326 754 L 360 754 M 296 542 Q 296 572, 326 572 L 360 572"
+          fill="none" stroke="#5A5A64" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- projeto -->
+    <rect x="196" y="214" width="604" height="220" rx="48" fill="url(#parent)" stroke="#55555E" stroke-width="4" filter="url(#shadow)"/>
+    <rect x="236" y="264" width="120" height="120" rx="30" fill="#F2F2F4"/>
+    <g fill="none" stroke="#18181B" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M266 300 L 292 324 L 266 348"/>
+      <path d="M306 348 L 330 348"/>
+    </g>
+    <rect x="392" y="282" width="320" height="38" rx="19" fill="#ECECEF"/>
+    <rect x="392" y="342" width="210" height="26" rx="13" fill="#6E6E78"/>
+
+    <!-- conversas dos agentes -->
+    <rect x="360" y="512" width="468" height="120" rx="36" fill="#26262B" stroke="#4A4A52" stroke-width="4" filter="url(#shadow)"/>
+    <circle cx="420" cy="572" r="30" fill="#60A5FA" fill-opacity="0.22"/>
+    <circle cx="420" cy="572" r="17" fill="#60A5FA"/>
+    <rect x="468" y="556" width="250" height="32" rx="16" fill="#BDBDC5"/>
+
+    <rect x="360" y="694" width="468" height="120" rx="36" fill="#26262B" stroke="#4A4A52" stroke-width="4" filter="url(#shadow)"/>
+    <circle cx="420" cy="754" r="30" fill="#FBBF24" fill-opacity="0.22"/>
+    <circle cx="420" cy="754" r="17" fill="#FBBF24"/>
+    <rect x="468" y="738" width="190" height="32" rx="16" fill="#BDBDC5"/>
+  </g>
+  <rect x="100.5" y="100.5" width="823" height="823" rx="186" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+</svg>
