@@ -179,8 +179,29 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 .ugrid p { margin: 0; color: var(--muted); font-size: 15px; }
 
 /* Integrações */
-.integrations { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; max-width: 900px; margin: 24px auto 0; }
-.integrations span { display: grid; place-items: center; height: 80px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: #d0d0d0; font-weight: 500; font-size: 15px; }
+/* Piso de teclas: plano inclinado em 3D, fileiras andando como letreiros, o Argus em destaque no meio */
+.floor { position: relative; height: 600px; margin-top: 8px; overflow: hidden; perspective: 1500px; }
+.floor__plane { position: absolute; left: 50%; top: 50%; width: 2400px; height: 2400px; margin: -1200px 0 0 -1200px; display: flex; flex-direction: column; justify-content: center; gap: 18px; transform: rotateX(40deg) rotateZ(-30deg); transform-style: preserve-3d; }
+.floor__row { display: flex; gap: 18px; width: max-content; transform-style: preserve-3d; animation: floor-tick var(--dur, 60s) linear infinite; }
+.floor__row:nth-child(even) { animation-direction: reverse; }
+@keyframes floor-tick { to { transform: translateX(-50%); } }
+.floor__tile {
+  flex: none; display: grid; place-items: center; width: 132px; height: 132px; border-radius: 32px;
+  background: linear-gradient(150deg, #1c1916, #110f0d 70%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .06), 0 7px 0 #080706, 0 16px 26px rgb(0 0 0 / .55);
+}
+.floor__tile img { width: 40%; height: 40%; object-fit: contain; opacity: .4; }
+.floor__core {
+  position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 36px;
+  background: linear-gradient(150deg, #24201c, #15120f 70%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .09), 0 9px 0 #080706, 0 0 70px rgb(255 122 26 / .35), 0 0 0 10px rgb(255 77 0 / .12);
+  transform: translateZ(24px); transition: transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s;
+}
+.floor__core img { width: 46%; height: auto; }
+/* Brasa embaixo da tecla do meio, que acende as frestas em volta. */
+.floor__core::before { content: ""; position: absolute; inset: -60px; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgb(255 110 20 / .45), rgb(255 77 0 / .12) 55%, transparent); transform: translateZ(-30px); }
+.floor:hover .floor__core { transform: translateZ(48px); box-shadow: inset 0 1px 0 rgb(255 255 255 / .12), 0 14px 0 #080706, 0 0 110px rgb(255 122 26 / .55), 0 0 0 14px rgb(255 77 0 / .18); }
+.floor__fade { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 70% at 50% 50%, transparent 35%, var(--bg) 92%), linear-gradient(var(--bg), transparent 18%, transparent 82%, var(--bg)); }
 
 /* Vários agentes */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
@@ -269,7 +290,6 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
   .nav__links { display: none; }
   .nav__inner { grid-template-columns: 1fr auto; }
   .hero__grid { grid-template-columns: 1fr; padding: 40px 32px 0; }
-  .integrations { grid-template-columns: repeat(4, 1fr); }
   .split, .control, .faq, .cycle { grid-template-columns: 1fr; gap: 48px; }
   .control, .cycle { padding: 40px; }
 }
@@ -284,7 +304,7 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
   .marquee { width: 100%; }
   .section { padding: 88px 0; }
   .ugrid, .tiers { grid-template-columns: 1fr; }
-  .integrations { grid-template-columns: repeat(2, 1fr); }
+  .floor { height: 440px; }
   .infra__logos { gap: 24px; font-size: 17px; flex-wrap: wrap; }
   .quote { padding: 28px; }
   .stats { gap: 40px; }

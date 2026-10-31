@@ -316,3 +316,33 @@ if (!reduceMotion) {
   )
   targets.forEach((el) => io.observe(el))
 }
+
+// Seção "Conecte com o que você já usa": piso de teclas inclinado com as ferramentas. Cada fileira
+// anda como um letreiro (uma para cada lado) e o Argus fica parado e levantado no meio.
+const STACK = ['github', 'git', 'modelcontextprotocol', 'nodedotjs', 'npm', 'pnpm', 'figma', 'notion', 'linear', 'docker', 'vercel', 'supabase', 'postgresql', 'ubuntu', 'gnubash', 'claude', 'openai', 'googlegemini', 'cursor']
+
+function floor(el) {
+  const plane = el.querySelector('.floor__plane')
+  const ROWS = 11
+  const PER_ROW = 18 // teclas em cada cópia da fileira (a fileira tem duas, para o loop não ter emenda)
+  for (let r = 0; r < ROWS; r++) {
+    const row = document.createElement('div')
+    row.className = 'floor__row'
+    // Velocidades um pouco diferentes, para as fileiras não andarem em bloco.
+    row.style.setProperty('--dur', `${70 + ((r * 37) % 30)}s`)
+    const tiles = Array.from({ length: PER_ROW }, (_, i) => STACK[(i * 3 + r * 7) % STACK.length])
+    for (const name of [...tiles, ...tiles]) {
+      const tile = document.createElement('span')
+      tile.className = 'floor__tile'
+      tile.innerHTML = `<img src="assets/stack/${name}.svg" alt="" loading="lazy">`
+      row.appendChild(tile)
+    }
+    plane.appendChild(row)
+  }
+  const core = document.createElement('span')
+  core.className = 'floor__core'
+  core.innerHTML = '<img src="assets/icone-argus-laranja.svg" alt="">'
+  plane.appendChild(core)
+  if (reduceMotion) el.querySelectorAll('.floor__row').forEach((row) => (row.style.animation = 'none'))
+}
+document.querySelectorAll('[data-floor]').forEach(floor)
