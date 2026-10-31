@@ -693,3 +693,31 @@ document.querySelectorAll('[data-eye]').forEach((box) => {
     requestAnimationFrame(loop)
   })(performance.now())
 })
+
+// Ajuda: busca e filtro por assunto nos cartões dos tutoriais.
+document.querySelectorAll('[data-help]').forEach((box) => {
+  const cards = [...box.querySelectorAll('.tcard')]
+  const input = box.querySelector('[data-help-search]')
+  const empty = box.querySelector('[data-help-empty]')
+  const buttons = [...box.querySelectorAll('[data-filter]')]
+  let cat = ''
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const apply = () => {
+    const q = norm(input.value.trim())
+    let shown = 0
+    for (const c of cards) {
+      const ok = (!cat || c.dataset.cat === cat) && (!q || norm(c.textContent).includes(q))
+      c.hidden = !ok
+      if (ok) shown++
+    }
+    empty.hidden = shown > 0
+  }
+  input.addEventListener('input', apply)
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      cat = b.dataset.filter
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)))
+      apply()
+    })
+  )
+})
