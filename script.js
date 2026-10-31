@@ -479,3 +479,61 @@ document.querySelectorAll('[data-marquee]').forEach((track) => {
   while (track.scrollWidth < 2600) unit.forEach(clone)
   ;[...track.children].forEach(clone)
 })
+
+// Página de download: destaca o sistema de quem visita e troca os links pelos arquivos do último
+// release (a API do GitHub). Sem a API, os botões continuam levando à página do release.
+const download = document.querySelector('[data-download]')
+if (download) {
+  const ua = navigator.userAgent
+  const os = /Windows/.test(ua) ? 'win' : /Mac/.test(ua) ? 'mac' : /Linux|X11/.test(ua) ? 'linux' : null
+  const NAMES = { mac: 'macOS', win: 'Windows', linux: 'Linux' }
+  const PICK = { mac: 'dmg', win: 'exe', linux: 'appimage' }
+  const main = download.querySelector('[data-dl-main]')
+  if (os) {
+    download.querySelector(`.dl-card[data-os="${os}"]`)?.classList.add('is-mine')
+    main.textContent = `Baixar para ${NAMES[os]}`
+  }
+  const MATCH = { dmg: /arm64\.dmg$/, zip: /arm64\.zip$/, exe: /Setup.*\.exe$/, appimage: /\.AppImage$/ }
+  fetch('https://api.github.com/repos/ffernandomoraes/argus/releases/latest')
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((rel) => {
+      const urls = {}
+      for (const [k, re] of Object.entries(MATCH)) {
+        const a = rel.assets.find((x) => re.test(x.name))
+        if (a) urls[k] = { href: a.browser_download_url, mb: Math.round(a.size / 1048576) }
+      }
+      document.querySelectorAll('[data-dl]').forEach((el) => {
+        const u = urls[el.dataset.dl]
+        if (!u) return
+        el.href = u.href
+        el.removeAttribute('target')
+        if (el.classList.contains('btn')) el.textContent += ` · ${u.mb} MB`
+      })
+      if (os && urls[PICK[os]]) {
+        main.href = urls[PICK[os]].href
+        main.removeAttribute('target')
+      }
+      download.querySelector('[data-dl-version]').textContent = rel.tag_name
+    })
+    .catch(() => {})
+}
+
+// Abas do passo a passo e botão de copiar o comando.
+document.querySelectorAll('.dl-tabs').forEach((tabs) => {
+  const box = tabs.parentElement
+  const show = (name) => {
+    tabs.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)))
+    box.querySelectorAll('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== name))
+  }
+  tabs.addEventListener('click', (e) => e.target.dataset?.tab && show(e.target.dataset.tab))
+  const ua = navigator.userAgent
+  show(/Windows/.test(ua) ? 'win' : /Linux|X11/.test(ua) && !/Mac/.test(ua) ? 'linux' : 'mac')
+})
+document.querySelectorAll('[data-copy]').forEach((b) =>
+  b.addEventListener('click', () => {
+    navigator.clipboard.writeText(b.dataset.copy).then(() => {
+      b.textContent = 'Copiado'
+      setTimeout(() => (b.textContent = 'Copiar'), 1500)
+    })
+  })
+)
