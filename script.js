@@ -537,3 +537,51 @@ document.querySelectorAll('[data-copy]').forEach((b) =>
     })
   })
 )
+
+// Atalhos: mostra as teclas do sistema de quem visita, com abas para trocar.
+document.querySelectorAll('[data-keys]').forEach((box) => {
+  const show = (os) => {
+    box.dataset.os = os
+    box.querySelectorAll('[data-os]').forEach((b) => b !== box && b.setAttribute('aria-selected', String(b.dataset.os === os)))
+  }
+  box.querySelector('.keys-os').addEventListener('click', (e) => e.target.dataset?.os && show(e.target.dataset.os))
+  show(/Mac/.test(navigator.userAgent) ? 'mac' : 'win')
+})
+
+// Documentação: marca no índice a seção que está na tela.
+const docSide = document.querySelector('.doc-side')
+if (docSide) {
+  const links = [...docSide.querySelectorAll('a[href^="#"]')]
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id))
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  )
+  document.querySelectorAll('.doc-sec').forEach((s) => io.observe(s))
+}
+
+// Novidades: troca a lista pela dos releases mais recentes do GitHub (a do HTML fica de reserva).
+const relList = document.querySelector('[data-releases]')
+if (relList) {
+  const TAGS = { FUNCIONALIDADE: ['Novo', 'new'], MELHORIA: ['Melhoria', 'imp'], BUG: ['Correção', 'fix'] }
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
+  fetch('https://api.github.com/repos/ffernandomoraes/argus/releases?per_page=20')
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((rels) => {
+      const html = rels
+        .map((r) => {
+          const items = (r.body || '')
+            .split('\n')
+            .map((l) => l.match(/^\s*-\s*\[(FUNCIONALIDADE|MELHORIA|BUG)\]\s*(.+)$/))
+            .filter(Boolean)
+            .map((m) => `<li><span class="rel-tag rel-tag--${TAGS[m[1]][1]}">${TAGS[m[1]][0]}</span>${esc(m[2])}</li>`)
+          if (!items.length) return ''
+          const d = r.published_at.slice(0, 10).split('-').reverse().join('/')
+          return `<article class="rel"><div class="rel__head"><a href="${r.html_url}" target="_blank" rel="noopener" class="rel__tag mono">${esc(r.tag_name)}</a><time>${d}</time></div><ul>${items.join('')}</ul></article>`
+        })
+        .join('')
+      if (html) relList.innerHTML = html
+    })
+    .catch(() => {})
+}
