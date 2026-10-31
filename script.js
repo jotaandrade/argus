@@ -59,7 +59,7 @@ document.querySelectorAll('[data-ascii]').forEach(ascii)
 // empurra os pontos para fora enquanto se espalha.
 const GRID = {
   gap: 34, // distância entre os pontos
-  dot: 1.6, // raio do ponto parado
+  dot: 1, // raio do ponto parado (2px de diâmetro)
   reach: 190, // até onde o cursor atrai
   pull: 22, // quanto o ponto anda na direção do cursor
   waveSpeed: 4.2, // px por quadro
@@ -167,7 +167,7 @@ function rippleGrid(canvas) {
         ctx.lineWidth = 0.75 + glow * 0.8
         ctx.stroke()
       }
-      const r = GRID.dot * (1 + glow * 1.2)
+      const r = GRID.dot * (1 + glow * 0.5)
       if (glow > 0.05) {
         const halo = ctx.createRadialGradient(x, y, 0, x, y, r * (3 + glow * 4))
         halo.addColorStop(0, rgba(GRID.lit, 0.13 * glow))
