@@ -346,3 +346,121 @@ function floor(el) {
   if (reduceMotion) el.querySelectorAll('.floor__row').forEach((row) => (row.style.animation = 'none'))
 }
 document.querySelectorAll('[data-floor]').forEach(floor)
+
+// Rodapé: o ícone do Argus feito de partículas. Cada ponto tem a cor do pixel da imagem; o cursor
+// empurra os pontos, que voltam ao lugar como molas e tremem de leve mesmo parados. Ao aparecer na
+// tela, os pontos chegam espalhados e se juntam.
+const PARTICLES = {
+  gap: 5, // de quantos em quantos pixels da imagem sai um ponto
+  size: 2.2, // lado do ponto
+  reach: 95, // raio de alcance do cursor
+  push: 6, // força do empurrão
+  spring: 0.045, // força que puxa o ponto de volta
+  friction: 0.86
+}
+
+function particles(canvas) {
+  const ctx = canvas.getContext('2d')
+  const img = new Image()
+  let points = []
+  let w = 0
+  let h = 0
+  const mouse = { x: -9999, y: -9999 }
+
+  function build() {
+    const dpr = Math.min(devicePixelRatio || 1, 2)
+    w = canvas.clientWidth
+    h = canvas.clientHeight
+    canvas.width = w * dpr
+    canvas.height = h * dpr
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    // A imagem ocupa 72% da altura, centralizada, com folga em volta para os pontos voarem.
+    const ih = h * 0.72
+    const iw = (img.naturalWidth / img.naturalHeight) * ih || ih
+    const ox = (w - iw) / 2
+    const oy = (h - ih) / 2
+    const off = document.createElement('canvas')
+    off.width = Math.round(iw)
+    off.height = Math.round(ih)
+    const octx = off.getContext('2d', { willReadFrequently: true })
+    octx.drawImage(img, 0, 0, off.width, off.height)
+    const data = octx.getImageData(0, 0, off.width, off.height).data
+    const old = points
+    points = []
+    for (let y = 0; y < off.height; y += PARTICLES.gap) {
+      for (let x = 0; x < off.width; x += PARTICLES.gap) {
+        const i = (y * off.width + x) * 4
+        if (data[i + 3] < 128) continue
+        const hx = ox + x
+        const hy = oy + y
+        const prev = old[points.length]
+        points.push({
+          hx,
+          hy,
+          // Começam espalhados (ou onde estavam, num redimensionamento).
+          x: prev ? prev.x : Math.random() * w,
+          y: prev ? prev.y : Math.random() * h,
+          vx: 0,
+          vy: 0,
+          color: `rgb(${data[i]},${data[i + 1]},${data[i + 2]})`,
+          seed: Math.random() * 1000
+        })
+      }
+    }
+    if (reduceMotion) for (const p of points) Object.assign(p, { x: p.hx, y: p.hy })
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h)
+    for (const p of points) {
+      if (!reduceMotion) {
+        const dx = p.x - mouse.x
+        const dy = p.y - mouse.y
+        const d = Math.hypot(dx, dy)
+        if (d < PARTICLES.reach && d > 0.01) {
+          const f = (1 - d / PARTICLES.reach) * PARTICLES.push
+          p.vx += (dx / d) * f
+          p.vy += (dy / d) * f
+        }
+        // Volta para casa, com um tremor pequeno para nunca ficar parado de todo.
+        const jx = Math.sin(t * 0.002 + p.seed) * 0.6
+        const jy = Math.cos(t * 0.0023 + p.seed) * 0.6
+        p.vx += (p.hx + jx - p.x) * PARTICLES.spring
+        p.vy += (p.hy + jy - p.y) * PARTICLES.spring
+        p.vx *= PARTICLES.friction
+        p.vy *= PARTICLES.friction
+        p.x += p.vx
+        p.y += p.vy
+      }
+      ctx.fillStyle = p.color
+      ctx.fillRect(p.x, p.y, PARTICLES.size, PARTICLES.size)
+    }
+  }
+
+  const local = (e) => {
+    const box = canvas.getBoundingClientRect()
+    mouse.x = e.clientX - box.left
+    mouse.y = e.clientY - box.top
+  }
+  canvas.addEventListener('pointermove', local)
+  canvas.addEventListener('pointerdown', local)
+  canvas.addEventListener('pointerleave', () => Object.assign(mouse, { x: -9999, y: -9999 }))
+
+  img.onload = () => {
+    build()
+    new ResizeObserver(() => build()).observe(canvas)
+    if (reduceMotion) return draw(0)
+    let visible = false
+    new IntersectionObserver(([e]) => {
+      // Cada vez que o rodapé volta à tela, os pontos se espalham e se juntam de novo.
+      if (e.isIntersecting && !visible) for (const p of points) Object.assign(p, { x: Math.random() * w, y: Math.random() * h, vx: 0, vy: 0 })
+      visible = e.isIntersecting
+    }).observe(canvas)
+    ;(function loop(t) {
+      if (visible) draw(t)
+      requestAnimationFrame(loop)
+    })(0)
+  }
+  img.src = canvas.dataset.src
+}
+document.querySelectorAll('[data-particles]').forEach(particles)
