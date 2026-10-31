@@ -466,12 +466,16 @@ function particles(canvas) {
 }
 document.querySelectorAll('[data-particles]').forEach(particles)
 
-// Fileiras que andam em loop (mural de depoimentos): os cartões são repetidos uma vez, e a animação
-// anda metade da largura, então o fim de uma cópia encosta no começo da outra sem emenda.
+// Fileiras que andam em loop (mural de depoimentos). Com poucos cartões, eles se repetem até
+// passar da largura de uma tela grande; depois o conjunto é copiado uma vez, e a animação anda
+// metade da largura, então o fim de uma cópia encosta no começo da outra sem emenda.
 document.querySelectorAll('[data-marquee]').forEach((track) => {
-  for (const item of [...track.children]) {
+  const unit = [...track.children]
+  const clone = (item) => {
     const copy = item.cloneNode(true)
     copy.setAttribute('aria-hidden', 'true')
     track.appendChild(copy)
   }
+  while (track.scrollWidth < 2600) unit.forEach(clone)
+  ;[...track.children].forEach(clone)
 })
