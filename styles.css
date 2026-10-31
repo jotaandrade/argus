@@ -457,3 +457,11 @@ kbd { display: inline-grid; place-items: center; min-width: 26px; height: 26px; 
 .hero__lede { margin: 20px 0 0; max-width: 46ch; color: var(--muted); font-size: 18px; line-height: 1.55; }
 .hero__lede a { color: var(--fg); text-decoration: underline; text-decoration-color: rgb(215 117 82 / .6); text-underline-offset: 3px; }
 .hero__lede a:hover { color: var(--accent); }
+/* Para times */
+.team-quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; background: none; }
+.team-quotes article { padding: 28px; background: #262626; border: 1px solid #2f2f2f; border-radius: 12px; }
+.team-quotes header { margin-bottom: 18px; }
+.team-quotes p { margin: 0 0 12px; color: #ececec; font-size: 16px; line-height: 1.55; }
+.team-quotes strong a:hover { color: var(--accent); }
+.pfeat code, .psteps code { font: 13px var(--mono); color: #f0c2b0; background: #1c1c1c; padding: 1px 5px; border-radius: 4px; }
+@media (max-width: 900px) { .team-quotes { grid-template-columns: 1fr; } }
