@@ -453,3 +453,4 @@ kbd { display: inline-grid; place-items: center; min-width: 26px; height: 26px; 
   .doc-side { position: static; grid-auto-flow: column; overflow-x: auto; }
   .keys-grid, .contact-grid { grid-template-columns: 1fr; }
 }
+.about__people { display: grid; gap: 16px; }
