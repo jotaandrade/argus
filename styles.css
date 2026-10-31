@@ -454,3 +454,6 @@ kbd { display: inline-grid; place-items: center; min-width: 26px; height: 26px; 
   .keys-grid, .contact-grid { grid-template-columns: 1fr; }
 }
 .about__people { display: grid; gap: 16px; }
+.hero__lede { margin: 20px 0 0; max-width: 46ch; color: var(--muted); font-size: 18px; line-height: 1.55; }
+.hero__lede a { color: var(--fg); text-decoration: underline; text-decoration-color: rgb(215 117 82 / .6); text-underline-offset: 3px; }
+.hero__lede a:hover { color: var(--accent); }
