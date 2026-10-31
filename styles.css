@@ -465,3 +465,17 @@ kbd { display: inline-grid; place-items: center; min-width: 26px; height: 26px; 
 .team-quotes strong a:hover { color: var(--accent); }
 .pfeat code, .psteps code { font: 13px var(--mono); color: #f0c2b0; background: #1c1c1c; padding: 1px 5px; border-radius: 4px; }
 @media (max-width: 900px) { .team-quotes { grid-template-columns: 1fr; } }
+/* Comunidade */
+.phero .stats { margin-top: 56px; }
+.contact-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.people { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 8px 0 20px; }
+.person { display: grid; justify-items: center; gap: 6px; padding: 28px 16px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; transition: border-color .2s; }
+.person:hover { border-color: var(--accent); }
+.person img { width: 72px; height: 72px; margin-bottom: 8px; border-radius: 50%; object-fit: cover; }
+.person strong { font-weight: 500; }
+.person span { color: var(--muted); font-size: 13px; }
+.coffee { display: grid; place-items: center; gap: 8px; padding: 48px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; text-align: center; }
+.coffee span { font-size: 48px; }
+.coffee p { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 13px; }
+@media (max-width: 1100px) { .contact-grid--4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .contact-grid--4 { grid-template-columns: 1fr; } }

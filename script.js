@@ -585,3 +585,43 @@ if (relList) {
     })
     .catch(() => {})
 }
+
+// Números reais do repositório: as estrelas no menu de todas as páginas e, na Comunidade, os
+// números do topo e os contribuidores (sem os bots). Sem a API, fica o que veio no HTML.
+{
+  const repo = 'https://api.github.com/repos/ffernandomoraes/argus'
+  const get = (url) => fetch(url).then((r) => (r.ok ? r.json() : Promise.reject()))
+  const fmt = (n) => (n >= 1000 ? (n / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + 'K' : String(n))
+  get(repo)
+    .then((r) => {
+      document.querySelectorAll('[data-stars]').forEach((el) => (el.textContent = fmt(r.stargazers_count)))
+      document.querySelectorAll('[data-stat="stars"]').forEach((el) => (el.textContent = fmt(r.stargazers_count)))
+      document.querySelectorAll('[data-stat="forks"]').forEach((el) => (el.textContent = fmt(r.forks_count)))
+    })
+    .catch(() => {})
+  if (document.querySelector('[data-repo-stats]')) {
+    // A API pagina de 100 em 100: com 100 na primeira página, há pelo menos isso.
+    get(repo + '/releases?per_page=100')
+      .then((list) => (document.querySelector('[data-stat="releases"]').textContent = list.length >= 100 ? '100+' : String(list.length)))
+      .catch(() => {})
+  }
+  const people = document.querySelector('[data-contributors]')
+  if (people) {
+    get(repo + '/contributors?per_page=50')
+      .then((list) => {
+        const known = new Set(['ffernandomoraes'])
+        for (const c of list) {
+          if (c.type === 'Bot' || known.has(c.login)) continue
+          const a = document.createElement('a')
+          a.className = 'person'
+          a.href = c.html_url
+          a.target = '_blank'
+          a.rel = 'noopener'
+          a.innerHTML = `<img src="${c.avatar_url}&s=96" alt=""><strong></strong><span>${c.contributions} contribuições</span>`
+          a.querySelector('strong').textContent = c.login
+          people.appendChild(a)
+        }
+      })
+      .catch(() => {})
+  }
+}
