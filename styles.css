@@ -258,6 +258,7 @@ img.avatar { object-fit: cover; }
 .love__track strong { font-weight: 500; font-size: 15px; }
 .love__track p { margin: 0 0 14px; color: #ececec; font-size: 15.5px; line-height: 1.5; }
 .love__track p:last-child { margin-bottom: 0; }
+.love__track strong a:hover { color: var(--accent); }
 .love .avatar { width: 48px; height: 48px; background: #3a3a3a; color: #f0f0f0; }
 
 /* FAQ */
