@@ -251,7 +251,6 @@ img.avatar { object-fit: cover; }
 .love__rows { display: grid; gap: 20px; margin-top: 24px; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .love__row { overflow: hidden; }
 .love__track { display: flex; gap: 20px; width: max-content; animation: slide 70s linear infinite; }
-.love__row--reverse .love__track { animation-direction: reverse; animation-duration: 80s; }
 .love__rows:hover .love__track { animation-play-state: paused; }
 .love__track article { width: 384px; flex: none; padding: 24px; background: #262626; border: 1px solid #2f2f2f; border-radius: 12px; }
 .love__track header { margin-bottom: 18px; }
