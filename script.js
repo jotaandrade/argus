@@ -217,6 +217,104 @@ function rippleGrid(canvas) {
 }
 document.querySelectorAll('[data-ripple-grid]').forEach(rippleGrid)
 
+// Seção do fluxo: as seis etapas nos vértices de um hexágono (o formato do logo). O selo com o
+// ícone do Argus anda de etapa em etapa; a atual fica em destaque e aparece no texto ao lado.
+const STEPS = [
+  { title: 'Pedido', text: 'Escreva, cole um print ou dite o que precisa.' },
+  { title: 'Plano', text: 'O agente lê o projeto e explica o que vai fazer.' },
+  { title: 'Execução', text: 'Ferramentas e subagentes trabalham, e você vê cada passo.' },
+  { title: 'Permissão', text: 'O que pede aprovação chega no chat. Você decide.' },
+  { title: 'Revisão', text: 'O diff de cada arquivo editado, antes e depois.' },
+  { title: 'Pronto', text: 'Notificação no sistema quando termina.' }
+]
+
+function cycle(svg) {
+  const NS = 'http://www.w3.org/2000/svg'
+  const R = 150
+  const MOVE = 900 // ms andando de uma etapa para a outra
+  const HOLD = 1500 // ms parado em cada etapa
+  const corner = (i, r) => {
+    const a = ((-90 + 60 * i) * Math.PI) / 180
+    return { x: r * Math.cos(a), y: r * Math.sin(a) }
+  }
+  const poly = (r) => STEPS.map((_, i) => corner(i, r)).map((p) => `${p.x},${p.y}`).join(' ')
+  const add = (tag, attrs, parent = svg) => {
+    const el = document.createElementNS(NS, tag)
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v)
+    parent.appendChild(el)
+    return el
+  }
+
+  add('polygon', { class: 'ring', points: poly(212) })
+  add('polygon', { class: 'ring', points: poly(186) })
+  add('polygon', { class: 'shape', points: poly(R) })
+  add('polygon', { class: 'edge', points: poly(R) })
+  const trail = add('line', { class: 'trail' })
+  const points = STEPS.map((_, i) => corner(i, R))
+  points.forEach((p) => add('circle', { class: 'node', cx: p.x, cy: p.y, r: 4.5 }))
+  const labels = STEPS.map((s, i) => {
+    const p = corner(i, 196)
+    // Os de cima e de baixo ficam um pouco mais longe, para não encostar no vértice.
+    const y = i === 0 ? p.y - 12 : i === 3 ? p.y + 12 : p.y
+    const x = p.x + Math.sign(Math.round(p.x)) * 22
+    const t = add('text', { class: 'label', x, y })
+    t.textContent = s.title
+    return t
+  })
+  const token = add('g', {})
+  add('circle', { r: 27, fill: '#181818' }, token)
+  add('image', { href: 'assets/icone-argus-laranja.svg', x: -12, y: -14, width: 24, height: 28 }, token)
+
+  const box = svg.closest('.cycle')
+  const num = box?.querySelector('[data-cycle-num]')
+  const title = box?.querySelector('[data-cycle-title]')
+  const text = box?.querySelector('[data-cycle-text]')
+  const place = (p) => token.setAttribute('transform', `translate(${p.x} ${p.y})`)
+  const arrive = (i) => {
+    labels.forEach((l, k) => l.classList.toggle('on', k === i))
+    if (num) num.textContent = String(i + 1).padStart(2, '0')
+    if (title) title.textContent = STEPS[i].title
+    if (text) text.textContent = STEPS[i].text
+  }
+
+  let at = 0
+  place(points[0])
+  arrive(0)
+  if (reduceMotion) return
+  let visible = false
+  new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(svg)
+  let phaseStart = performance.now()
+  let moving = false
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+  ;(function loop(now) {
+    if (!visible) phaseStart = now // fora da tela, a contagem espera
+    const elapsed = now - phaseStart
+    if (!moving && elapsed > HOLD) {
+      moving = true
+      phaseStart = now
+    } else if (moving) {
+      const from = points[at]
+      const to = points[(at + 1) % points.length]
+      const t = Math.min(1, elapsed / MOVE)
+      const k = ease(t)
+      const p = { x: from.x + (to.x - from.x) * k, y: from.y + (to.y - from.y) * k }
+      place(p)
+      trail.setAttribute('x1', from.x)
+      trail.setAttribute('y1', from.y)
+      trail.setAttribute('x2', p.x)
+      trail.setAttribute('y2', p.y)
+      if (t === 1) {
+        moving = false
+        at = (at + 1) % points.length
+        arrive(at)
+        phaseStart = now
+      }
+    }
+    requestAnimationFrame(loop)
+  })(phaseStart)
+}
+document.querySelectorAll('[data-cycle]').forEach(cycle)
+
 // Seções aparecem ao entrar na tela.
 const targets = document.querySelectorAll('.section .container > *, .outro__inner > *')
 if (!reduceMotion) {

@@ -156,17 +156,20 @@
   <!-- Fluxo -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Fluxo</p>
-      <h2>Do pedido à mudança pronta.</h2>
-      <p class="lede">Escreva o pedido, acompanhe o plano, aprove o que precisa e revise o resultado. Tudo no mesmo lugar.</p>
-      <ol class="flow">
-        <li><span>01</span>Pedido<small>Texto, print ou voz</small></li>
-        <li><span>02</span>Plano<small>O agente explica o que vai fazer</small></li>
-        <li><span>03</span>Execução<small>Ferramentas e subagentes</small></li>
-        <li><span>04</span>Permissão<small>Você aprova o que importa</small></li>
-        <li><span>05</span>Revisão<small>Diff de cada arquivo</small></li>
-        <li><span>06</span>Pronto<small>Notificação no sistema</small></li>
-      </ol>
+      <div class="cycle">
+        <div class="cycle__text">
+          <p class="cycle__eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="4.5" cy="4.5" r="2.5"/><circle cx="11.5" cy="11.5" r="2.5"/><path d="M4.5 7v2a2.5 2.5 0 0 0 2.5 2.5H9"/></svg>Fluxo</p>
+          <h2>Do pedido à mudança pronta.</h2>
+          <p class="cycle__lede">Escreva o pedido, acompanhe o plano, aprove o que precisa e revise o resultado. Cada conversa passa pelas mesmas etapas, e você vê em qual delas está.</p>
+          <div class="cycle__now" aria-live="polite">
+            <span class="cycle__step mono" data-cycle-num>01</span>
+            <strong data-cycle-title>Pedido</strong>
+            <p data-cycle-text>Escreva, cole um print ou dite o que precisa.</p>
+          </div>
+        </div>
+        <!-- Hexágono das etapas: desenhado e animado por script.js -->
+        <svg class="cycle__art" data-cycle viewBox="-260 -240 520 480" role="img" aria-label="As seis etapas de uma conversa: pedido, plano, execução, permissão, revisão e pronto"></svg>
+      </div>
     </div>
   </section>
 

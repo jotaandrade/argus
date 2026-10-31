@@ -129,13 +129,24 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 .ucard p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; flex: 1; }
 .tag { align-self: flex-start; margin-top: 4px; font: 11px var(--mono); text-transform: uppercase; letter-spacing: .04em; color: #aaa; background: #2c2c2c; border-radius: 4px; padding: 2px 8px; }
 
-/* Fluxo */
-.flow { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.flow li { display: grid; gap: 6px; padding: 28px 22px; font-size: 19px; font-weight: 500; letter-spacing: -.01em; border-right: 1px solid var(--line); position: relative; }
-.flow li:last-child { border-right: 0; }
-.flow li span { font: 12px var(--mono); color: var(--accent); }
-.flow li small { font-size: 13.5px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
-.flow li:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); background: var(--bg); color: var(--faint); font-size: 14px; z-index: 1; }
+/* Fluxo: cartão claro com o hexágono das etapas */
+.cycle { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; padding: 56px; background: #ececec; color: var(--ink); border-radius: 12px; }
+.cycle__eyebrow { display: flex; align-items: center; gap: 8px; margin: 0 0 22px; font: 12px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: #6b6b6b; }
+.cycle__eyebrow svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.3; }
+.cycle h2 { color: var(--ink); max-width: 12ch; }
+.cycle__lede { margin: 0 0 40px; color: #5f5f5f; font-size: 16px; max-width: 40ch; }
+.cycle__now { display: grid; gap: 4px; padding-top: 20px; border-top: 1px solid #d6d6d6; max-width: 40ch; }
+.cycle__step { font-size: 12px; color: var(--accent); }
+.cycle__now strong { font-size: 18px; font-weight: 500; }
+.cycle__now p { margin: 0; color: #5f5f5f; font-size: 15px; min-height: 2.9em; }
+.cycle__art { width: 100%; height: auto; max-height: 480px; overflow: visible; }
+.cycle__art .ring { fill: none; stroke: #e0e0e0; }
+.cycle__art .shape { fill: #e3e3e3; }
+.cycle__art .edge { fill: none; stroke: #a8a8a8; stroke-width: 1.2; stroke-dasharray: 4 4; }
+.cycle__art .trail { fill: none; stroke: #181818; stroke-width: 1.4; stroke-dasharray: 4 4; }
+.cycle__art .node { fill: #181818; }
+.cycle__art .label { font: 500 14px var(--sans); fill: #5f5f5f; text-anchor: middle; dominant-baseline: middle; transition: fill .3s; }
+.cycle__art .label.on { fill: var(--ink); font-weight: 600; }
 
 /* Casos de uso */
 .ugrid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
@@ -235,12 +246,9 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
   .nav__links { display: none; }
   .nav__inner { grid-template-columns: 1fr auto; }
   .hero__grid { grid-template-columns: 1fr; padding: 40px 32px 0; }
-  .flow { grid-template-columns: repeat(3, 1fr); }
-  .flow li:nth-child(3)::after { display: none; }
-  .flow li:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
   .integrations { grid-template-columns: repeat(4, 1fr); }
-  .split, .control, .faq { grid-template-columns: 1fr; gap: 48px; }
-  .control { padding: 40px; }
+  .split, .control, .faq, .cycle { grid-template-columns: 1fr; gap: 48px; }
+  .control, .cycle { padding: 40px; }
 }
 @media (max-width: 760px) {
   .banner { font-size: 13px; gap: 12px; padding: 0 12px; }
@@ -252,9 +260,7 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
   .logos { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 20px 48px; }
   .marquee { width: 100%; }
   .section { padding: 88px 0; }
-  .flow, .ugrid, .tiers { grid-template-columns: 1fr; }
-  .flow li { border-right: 0; border-bottom: 1px solid var(--line); }
-  .flow li::after { display: none; }
+  .ugrid, .tiers { grid-template-columns: 1fr; }
   .integrations { grid-template-columns: repeat(2, 1fr); }
   .infra__logos { gap: 24px; font-size: 17px; flex-wrap: wrap; }
   .quote { padding: 28px; }
