@@ -218,7 +218,7 @@ function rippleGrid(canvas) {
 document.querySelectorAll('[data-ripple-grid]').forEach(rippleGrid)
 
 // Seção do fluxo: o Argus no centro e as seis etapas girando em volta dele. A etapa que passa pelo
-// topo acende e aparece no texto ao lado. O fundo do cartão tem linhas de relevo, desenhadas aqui.
+// topo acende e aparece no texto ao lado.
 const STEPS = [
   { title: 'Pedido', text: 'Escreva, cole um print ou dite o que precisa.', icon: '<path d="M4 5h16v11H9l-5 4z"/>' },
   { title: 'Plano', text: 'O agente lê o projeto e explica o que vai fazer.', icon: '<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>' },
@@ -228,35 +228,8 @@ const STEPS = [
   { title: 'Pronto', text: 'Notificação no sistema quando termina.', icon: '<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>' }
 ]
 
-function topo(card) {
-  const NS = 'http://www.w3.org/2000/svg'
-  const svg = document.createElementNS(NS, 'svg')
-  svg.setAttribute('class', 'cycle__topo')
-  svg.setAttribute('viewBox', '0 0 1200 600')
-  svg.setAttribute('preserveAspectRatio', 'none')
-  svg.setAttribute('aria-hidden', 'true')
-  // Curvas de nível em dois grupos, um em cada canto: a mesma onda deslocada aos poucos.
-  const group = (x0, y0, dir) => {
-    for (let k = 0; k < 14; k++) {
-      let d = ''
-      for (let t = 0; t <= 60; t++) {
-        const x = x0 + dir * t * 14
-        const y = y0 + dir * (k * 9 - t * 5) + Math.sin(t / 7 + k * 0.25) * (26 + k * 2)
-        d += (t ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1)
-      }
-      const path = document.createElementNS(NS, 'path')
-      path.setAttribute('d', d)
-      svg.appendChild(path)
-    }
-  }
-  group(-40, 140, 1)
-  group(1240, 470, -1)
-  card.prepend(svg)
-}
-
 function orbit(el) {
   const card = el.closest('.cycle')
-  if (card) topo(card)
   const core = el.querySelector('.orbit__core')
   const PERIOD = 16000 // ms para uma volta inteira
   const items = STEPS.map((s) => {

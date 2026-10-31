@@ -131,8 +131,6 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 
 /* Fluxo: cartão escuro com a órbita das etapas em volta do Argus */
 .cycle { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: center; padding: 56px; background: #0b0b0b; border: 1px solid var(--line); border-radius: 16px; }
-.cycle__topo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.cycle__topo path { fill: none; stroke: rgb(255 255 255 / .07); stroke-width: 1; }
 .cycle__text, .orbit { position: relative; }
 .cycle__eyebrow { display: flex; align-items: center; gap: 8px; margin: 0 0 22px; font: 12px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 .cycle__eyebrow svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.3; }
