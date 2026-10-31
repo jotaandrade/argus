@@ -465,3 +465,13 @@ function particles(canvas) {
   img.src = canvas.dataset.src
 }
 document.querySelectorAll('[data-particles]').forEach(particles)
+
+// Fileiras que andam em loop (mural de depoimentos): os cartões são repetidos uma vez, e a animação
+// anda metade da largura, então o fim de uma cópia encosta no começo da outra sem emenda.
+document.querySelectorAll('[data-marquee]').forEach((track) => {
+  for (const item of [...track.children]) {
+    const copy = item.cloneNode(true)
+    copy.setAttribute('aria-hidden', 'true')
+    track.appendChild(copy)
+  }
+})
