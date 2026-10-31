@@ -143,11 +143,13 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 .pv-nums b { color: var(--fg); font-weight: 500; }
 
 /* Faixa de logos */
-.logos { position: relative; display: flex; align-items: center; gap: 32px; padding: 52px 0 56px 20px; }
-.logos__label { flex: none; margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
-.marquee__track { display: flex; gap: 56px; width: max-content; animation: slide 40s linear infinite; }
-.marquee__track span { font-size: 19px; font-weight: 600; letter-spacing: -.02em; color: #d8d8d8; white-space: nowrap; }
+.logos { position: relative; display: flex; align-items: center; gap: 40px; max-width: 1240px; margin: 0 auto; padding: 56px 32px 64px; }
+.logos__label { flex: none; margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.marquee { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track { display: flex; align-items: center; gap: 56px; width: max-content; animation: slide 35s linear infinite; }
+.brand { display: flex; align-items: center; height: 28px; font-size: 18px; font-weight: 600; letter-spacing: -.02em; color: #8a8a8a; white-space: nowrap; }
+/* Logos em cinza claro, como na referência: qualquer cor do arquivo vira cinza. */
+.brand img { height: 100%; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(0) invert(.62); }
 @keyframes slide { to { transform: translateX(-50%); } }
 
 /* Seções */
@@ -287,7 +289,8 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
   .preview { grid-template-columns: 1fr; height: auto; }
   .pv-side { display: none; }
   .pv-stats, .pv-cards { grid-template-columns: repeat(2, 1fr); }
-  .logos { flex-direction: column; align-items: flex-start; padding-left: 20px; }
+  .logos { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 20px 48px; }
+  .marquee { width: 100%; }
   .section { padding: 88px 0; }
   .flow, .ugrid, .tiers { grid-template-columns: 1fr; }
   .flow li { border-right: 0; border-bottom: 1px solid var(--line); }
