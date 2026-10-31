@@ -347,7 +347,7 @@ function floor(el) {
 }
 document.querySelectorAll('[data-floor]').forEach(floor)
 
-// Rodapé: o ícone do Argus feito de partículas. Cada ponto tem a cor do pixel da imagem; o cursor
+// Rodapé: o ícone do Argus feito de partículas brancas, com o formato da imagem; o cursor
 // empurra os pontos, que voltam ao lugar como molas e tremem de leve mesmo parados. Ao aparecer na
 // tela, os pontos chegam espalhados e se juntam.
 const PARTICLES = {
@@ -356,7 +356,8 @@ const PARTICLES = {
   reach: 95, // raio de alcance do cursor
   push: 6, // força do empurrão
   spring: 0.045, // força que puxa o ponto de volta
-  friction: 0.86
+  friction: 0.86,
+  color: '#f7f7f7' // todos os pontos na mesma cor (o desenho vem do formato da imagem)
 }
 
 function particles(canvas) {
@@ -402,7 +403,7 @@ function particles(canvas) {
           y: prev ? prev.y : Math.random() * h,
           vx: 0,
           vy: 0,
-          color: `rgb(${data[i]},${data[i + 1]},${data[i + 2]})`,
+          color: PARTICLES.color,
           seed: Math.random() * 1000
         })
       }

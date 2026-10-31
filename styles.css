@@ -279,7 +279,7 @@ img.avatar { object-fit: cover; }
 .outro__inner { position: relative; }
 .outro__title { margin: 0 0 18px; max-width: 18ch; font-size: clamp(36px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -.035em; font-weight: 500; }
 .outro__mark { margin-top: 64px; }
-.outro__mark canvas { display: block; width: min(100%, 520px); aspect-ratio: 520 / 560; touch-action: none; }
+.outro__mark canvas { display: block; margin: 0 auto; width: min(100%, 520px); aspect-ratio: 520 / 560; touch-action: none; }
 .legal { border-top: 1px solid var(--line); }
 .legal__inner { display: flex; justify-content: space-between; align-items: center; height: 72px; color: var(--muted); font-size: 13px; }
 .legal nav { display: flex; gap: 24px; }
