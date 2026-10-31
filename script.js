@@ -625,3 +625,42 @@ if (relList) {
       .catch(() => {})
   }
 }
+
+// Sobre: o ícone do Argus como um olho. O hexágono fica parado e a estrela (a pupila) olha para o
+// mouse, sem passar da borda do círculo de dentro; de vez em quando ela pisca.
+document.querySelectorAll('[data-eye]').forEach((box) => {
+  const svg = box.querySelector('svg')
+  const pupil = box.querySelector('.eye__pupil')
+  const CENTER = { x: 192.8, y: 231.9 } // centro do círculo, nas coordenadas do SVG
+  const MAX = 46 // quanto a pupila anda, antes de encostar na borda
+  const target = { x: 0, y: 0 }
+  const pos = { x: 0, y: 0 }
+  let blink = 1
+  addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect()
+    const scale = r.width / 386
+    const dx = e.clientX - (r.left + CENTER.x * scale)
+    const dy = e.clientY - (r.top + CENTER.y * scale)
+    const d = Math.hypot(dx, dy) || 1
+    // Perto do ícone anda pouco; a partir de ~400px, vai até a borda.
+    const k = Math.min(1, d / 400) * MAX
+    target.x = (dx / d) * k
+    target.y = (dy / d) * k
+  })
+  document.addEventListener('pointerleave', () => Object.assign(target, { x: 0, y: 0 }))
+  if (reduceMotion) return
+  let nextBlink = performance.now() + 2500
+  ;(function loop(now) {
+    // Segue o mouse com atraso suave.
+    pos.x += (target.x - pos.x) * 0.12
+    pos.y += (target.y - pos.y) * 0.12
+    // Piscar: fecha e abre em ~180ms, a cada 3 a 6 segundos.
+    if (now > nextBlink) {
+      const t = (now - nextBlink) / 180
+      blink = t < 1 ? Math.abs(1 - 2 * t) * 0.9 + 0.1 : 1
+      if (t >= 1) nextBlink = now + 3000 + Math.random() * 3000
+    }
+    pupil.setAttribute('transform', `translate(${pos.x.toFixed(2)} ${pos.y.toFixed(2)}) translate(${CENTER.x} ${CENTER.y}) scale(1 ${blink.toFixed(3)}) translate(${-CENTER.x} ${-CENTER.y})`)
+    requestAnimationFrame(loop)
+  })(performance.now())
+})
