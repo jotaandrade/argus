@@ -347,7 +347,7 @@ function floor(el) {
 }
 document.querySelectorAll('[data-floor]').forEach(floor)
 
-// Rodapé: o ícone do Argus feito de partículas brancas, com o formato da imagem; o cursor
+// Rodapé: o ícone do Argus feito de partículas brancas, com o formato da imagem, olhando para o mouse; o cursor
 // empurra os pontos, que voltam ao lugar como molas e tremem de leve mesmo parados. Ao aparecer na
 // tela, os pontos chegam espalhados e se juntam.
 const PARTICLES = {
@@ -367,6 +367,10 @@ function particles(canvas) {
   let w = 0
   let h = 0
   const mouse = { x: -9999, y: -9999 }
+  // Olho: os pontos da estrela (a pupila) olham para o mouse e piscam, como no ícone do Sobre.
+  // Centro do círculo e quanto a pupila anda, em coordenadas do ícone (386 x 458).
+  const EYE = { cx: 192.8, cy: 231.9, max: 46, w: 386 }
+  const eye = { cx: 0, cy: 0, max: 0, x: 0, y: 0, tx: 0, ty: 0, blink: 1, next: 2500 }
 
   function build() {
     const dpr = Math.min(devicePixelRatio || 1, 2)
@@ -380,6 +384,8 @@ function particles(canvas) {
     const iw = (img.naturalWidth / img.naturalHeight) * ih || ih
     const ox = (w - iw) / 2
     const oy = (h - ih) / 2
+    const k = iw / EYE.w
+    Object.assign(eye, { cx: ox + EYE.cx * k, cy: oy + EYE.cy * k, max: EYE.max * k })
     const off = document.createElement('canvas')
     off.width = Math.round(iw)
     off.height = Math.round(ih)
@@ -404,6 +410,8 @@ function particles(canvas) {
           vx: 0,
           vy: 0,
           color: PARTICLES.color,
+          // Pixel claro é da estrela; o laranja é o hexágono.
+          pupil: data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200,
           seed: Math.random() * 1000
         })
       }
@@ -413,7 +421,17 @@ function particles(canvas) {
 
   function draw(t) {
     ctx.clearRect(0, 0, w, h)
+    eye.x += (eye.tx - eye.x) * 0.1
+    eye.y += (eye.ty - eye.y) * 0.1
+    if (t > eye.next) {
+      const b = (t - eye.next) / 180
+      eye.blink = b < 1 ? Math.abs(1 - 2 * b) * 0.9 + 0.1 : 1
+      if (b >= 1) eye.next = t + 3000 + Math.random() * 3000
+    }
     for (const p of points) {
+      // Casa da pupila: deslocada para onde o olho olha e achatada na piscada.
+      const homeX = p.pupil ? p.hx + eye.x : p.hx
+      const homeY = p.pupil ? eye.cy + (p.hy - eye.cy) * eye.blink + eye.y : p.hy
       if (!reduceMotion) {
         const dx = p.x - mouse.x
         const dy = p.y - mouse.y
@@ -426,8 +444,8 @@ function particles(canvas) {
         // Volta para casa, com um tremor pequeno para nunca ficar parado de todo.
         const jx = Math.sin(t * 0.002 + p.seed) * 0.6
         const jy = Math.cos(t * 0.0023 + p.seed) * 0.6
-        p.vx += (p.hx + jx - p.x) * PARTICLES.spring
-        p.vy += (p.hy + jy - p.y) * PARTICLES.spring
+        p.vx += (homeX + jx - p.x) * PARTICLES.spring
+        p.vy += (homeY + jy - p.y) * PARTICLES.spring
         p.vx *= PARTICLES.friction
         p.vy *= PARTICLES.friction
         p.x += p.vx
@@ -446,6 +464,17 @@ function particles(canvas) {
   canvas.addEventListener('pointermove', local)
   canvas.addEventListener('pointerdown', local)
   canvas.addEventListener('pointerleave', () => Object.assign(mouse, { x: -9999, y: -9999 }))
+  // Para onde o olho olha: o mouse em qualquer lugar da página.
+  addEventListener('pointermove', (e) => {
+    const box = canvas.getBoundingClientRect()
+    const dx = e.clientX - (box.left + eye.cx)
+    const dy = e.clientY - (box.top + eye.cy)
+    const d = Math.hypot(dx, dy) || 1
+    const k = Math.min(1, d / 400) * eye.max
+    eye.tx = (dx / d) * k
+    eye.ty = (dy / d) * k
+  })
+  document.addEventListener('pointerleave', () => Object.assign(eye, { tx: 0, ty: 0 }))
 
   img.onload = () => {
     build()
