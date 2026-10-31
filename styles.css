@@ -7,7 +7,7 @@
   --fg: #f7f7f7;
   --muted: #979797;
   --faint: #5f5f5f;
-  --accent: #ffff8b;
+  --accent: #d77552; /* laranja do logo */
   --cream: #f7f3ee;
   --ink: #181818;
   --green: #1fbd53;
@@ -153,7 +153,7 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 .stack__row p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .stack__row div { display: flex; flex-wrap: wrap; gap: 8px; }
 .stack__row span { padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 8px; font-size: 14px; color: #ccc; }
-.stack__row span.on { border-color: var(--accent); color: var(--accent); background: rgb(255 255 139 / .06); }
+.stack__row span.on { border-color: var(--accent); color: var(--accent); background: rgb(215 117 82 / .1); }
 
 /* Infra e depoimento */
 .infra { overflow: hidden; }
