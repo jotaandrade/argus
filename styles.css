@@ -159,11 +159,12 @@ h1 { font-size: clamp(40px, 4vw, 56px); line-height: 1.08; letter-spacing: -.035
 .cards-marquee { overflow: hidden; margin-top: 64px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .cards-marquee__track { display: flex; gap: 16px; width: max-content; animation: slide 60s linear infinite; }
 .cards-marquee:hover .cards-marquee__track { animation-play-state: paused; }
-.ucard { width: 330px; display: flex; flex-direction: column; gap: 12px; padding: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
-.ucard__ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: #262626; font-size: 18px; color: var(--accent); }
-.ucard h3 { font-size: 18px; }
-.ucard p { margin: 0; color: var(--muted); font-size: 14.5px; flex: 1; }
-.tag { align-self: flex-start; font: 12px var(--mono); color: #bbb; border: 1px solid var(--line-2); border-radius: 999px; padding: 3px 10px; }
+.ucard { width: 316px; display: flex; flex-direction: column; gap: 10px; padding: 18px; background: #1e1e1e; border: 1px solid var(--line); border-radius: 14px; }
+.ucard__ic { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 6px; border-radius: 8px; background: #fff; }
+.ucard__ic img { width: 20px; height: 20px; }
+.ucard h3 { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.ucard p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; flex: 1; }
+.tag { align-self: flex-start; margin-top: 4px; font: 11px var(--mono); text-transform: uppercase; letter-spacing: .04em; color: #aaa; background: #2c2c2c; border-radius: 4px; padding: 2px 8px; }
 
 /* Fluxo */
 .flow { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
