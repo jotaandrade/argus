@@ -351,9 +351,9 @@ document.querySelectorAll('[data-floor]').forEach(floor)
 // empurra os pontos, que voltam ao lugar como molas e tremem de leve mesmo parados. Ao aparecer na
 // tela, os pontos chegam espalhados e se juntam.
 const PARTICLES = {
-  gap: 5, // de quantos em quantos pixels da imagem sai um ponto
-  size: 2.2, // lado do ponto
-  reach: 95, // raio de alcance do cursor
+  gap: 6, // de quantos em quantos pixels da imagem sai um ponto
+  size: 2.6, // lado do ponto
+  reach: 130, // raio de alcance do cursor
   push: 6, // força do empurrão
   spring: 0.045, // força que puxa o ponto de volta
   friction: 0.86,
